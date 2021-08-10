@@ -11,6 +11,12 @@ const buildSchema = mongoose.Schema({
     ref: 'CharacterClass',
     required: true,
   },
+  // Build details isn't initially required
+  // This is here to allow an easy query via .populate
+  buildDetails: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'BuildDetails',
+  },
   name: {
     type: String,
     required: true,

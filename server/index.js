@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import morgan from 'morgan'
 import connectDB from './db.js'
 import userRoutes from './routes/userRoutes.js'
+import buildRoutes from './routes/buildRoutes.js'
 import { notFound, internalError } from './middleware/errorMiddleWare.js'
 
 dotenv.config()
@@ -22,6 +23,7 @@ app.use(express.json())
 
 // Add route collections here
 app.use('/users', userRoutes)
+app.use('/builds', buildRoutes)
 
 // Provide the static file location
 if (process.env.NODE_ENV === 'production') {
