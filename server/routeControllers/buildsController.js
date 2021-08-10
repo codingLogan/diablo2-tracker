@@ -27,6 +27,15 @@ async function createBuild(req, res, next) {
   }
 }
 
+async function getBuilds(req, res, next) {
+  try {
+    const builds = await Build.find({})
+    res.json(builds)
+  } catch (error) {
+    next(error)
+  }
+}
+
 async function getBuildById(req, res, next) {
   try {
     const buildId = req.params.id
@@ -43,4 +52,4 @@ async function getBuildById(req, res, next) {
   }
 }
 
-export { createBuild, getBuildById }
+export { createBuild, getBuilds, getBuildById }

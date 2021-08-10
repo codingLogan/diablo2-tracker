@@ -55,6 +55,9 @@ async function insertData() {
       ],
     },
   ])
+
+  createdBuilds[0].buildDetails = createdDetails[0]._id
+  await createdBuilds[0].save()
 }
 
 async function start() {
