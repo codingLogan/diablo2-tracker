@@ -1,0 +1,38 @@
+{
+  "name": "diablo2-tracker",
+  "version": "1.0.0",
+  "description": "A simple mern app to run alongside your gaming session of diablo 2 to track your build",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server/index.js",
+    "seed": "node server/seeder.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Loganras/diablo2-tracker.git"
+  },
+  "keywords": [
+    "diablo2"
+  ],
+  "author": "loganras",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Loganras/diablo2-tracker/issues"
+  },
+  "homepage": "https://github.com/Loganras/diablo2-tracker#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.6",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
