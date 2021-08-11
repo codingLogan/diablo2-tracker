@@ -7,6 +7,7 @@ import useLoggedInUser from '../hooks/useLoggedInUser'
 import usePostedBuild from '../hooks/usePostedBuild'
 import { getBuildsAction, postBuildAction } from '../redux/actions/buildActions'
 import { getClassesAction } from '../redux/actions/classesActions'
+import { POST_BUILD_CLEAR } from '../redux/constants/buildConstants'
 import ContainerPage from './ContainerPage'
 
 function CreateBuildPage({ history }) {
@@ -45,6 +46,7 @@ function CreateBuildPage({ history }) {
   useEffect(() => {
     if (postedBuild && postedBuild._id) {
       dispatch(getBuildsAction())
+      dispatch({ type: POST_BUILD_CLEAR })
       history.push(`/builds/${postedBuild._id}`)
     }
   }, [dispatch, history, postedBuild])
@@ -80,7 +82,7 @@ function CreateBuildPage({ history }) {
           <Form.Group controlId='summary'>
             <Form.Label>Description</Form.Label>
             <Form.Control
-              type='text'
+              as='textarea'
               placeholder='Enter a descriptive summary'
               value={summary}
               onChange={(e) => setSummary(e.target.value)}

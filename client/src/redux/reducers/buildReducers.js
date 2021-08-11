@@ -9,6 +9,7 @@ import {
   POST_BUILD,
   POST_BUILD_SUCCESS,
   POST_BUILD_FAILURE,
+  POST_BUILD_CLEAR,
 } from '../constants/buildConstants'
 import { catchError, map, mergeMap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
@@ -90,6 +91,8 @@ export function postBuildReducer(state = {}, action) {
       return { loading: false, build: action.payload }
     case POST_BUILD_FAILURE:
       return { loading: false, error: action.payload }
+    case POST_BUILD_CLEAR:
+      return {}
     default:
       return state
   }
