@@ -1,5 +1,6 @@
 import BuildDetails from '../models/buildDetailsModel.js'
 import Build from '../models/buildsModel.js'
+import checkAuthorization from '../utils/checkAuthorization.js'
 
 async function createBuild(req, res, next) {
   try {
@@ -64,6 +65,8 @@ async function updateBuildById(req, res, next) {
       throw new Error('Build Not Found')
     }
 
+    checkAuthorization(req, res, build.userId)
+
     const { name, summary } = req.body
 
     build.name = name
@@ -80,6 +83,9 @@ async function addNewLevel(req, res, next) {
   try {
     const buildId = req.params.id
     const buildDetails = await BuildDetails.findOne({ buildId })
+    const build = await Build.findById(buildId)
+
+    checkAuthorization(req, res, build.userId)
 
     if (!buildDetails) {
       res.status(404)
@@ -87,8 +93,6 @@ async function addNewLevel(req, res, next) {
     }
 
     const { improvements } = req.body
-
-    console.log({ buildDetails, improvements })
 
     let maxLevel = 0
     buildDetails.levels.forEach((levelElement) => {
@@ -114,6 +118,9 @@ async function updateLevel(req, res, next) {
     const buildId = req.params.id
     const levelNumber = Number(req.params.level)
     const buildDetails = await BuildDetails.findOne({ buildId })
+    const build = await Build.findById(buildId)
+
+    checkAuthorization(req, res, build.userId)
 
     if (!buildDetails) {
       res.status(404)

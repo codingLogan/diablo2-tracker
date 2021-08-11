@@ -8,12 +8,13 @@ async function checkToken(req, res, next) {
   if (authorization && authorization.startsWith('Bearer')) {
     try {
       // "Bearer sometokenvalue"
-      token = authorization.split('Bearer ')[1]
+      token = authorization.split(' ')[1]
       const tokenPayload = jwt.verify(token, process.env.JWT_SECRET)
 
       // Give the routes access to the user that "bears" the token
       // But remove the password
-      req.user = await User.findById(tokenPayload._id).select('-password')
+      req.user = await User.findById(tokenPayload.id).select('-password')
+      next()
     } catch (error) {
       res.status(401)
       next(error)
@@ -22,8 +23,6 @@ async function checkToken(req, res, next) {
     res.status(401)
     next(Error('Not authorized, no token was provided'))
   }
-
-  next()
 }
 
 export default checkToken
