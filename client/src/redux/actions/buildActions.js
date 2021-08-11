@@ -1,6 +1,7 @@
 import {
   FETCH_BUILDS,
   FETCH_BUILD_DETAILS,
+  NEW_BUILD_LEVEL,
   POST_BUILD,
 } from '../constants/buildConstants'
 
@@ -22,5 +23,15 @@ export function postBuildAction(build, userToken) {
     type: POST_BUILD,
     payload: build,
     token: userToken,
+  }
+}
+
+export function newBuildLevelAction(buildId, improvements) {
+  return {
+    type: NEW_BUILD_LEVEL,
+    payload: {
+      improvements,
+      buildId,
+    },
   }
 }

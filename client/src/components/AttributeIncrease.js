@@ -21,7 +21,7 @@ function Attributes({ attributes, props }) {
     )
   }
   return (
-    <Card bg='primary' text='white' {...props}>
+    <Card bg='border-primary' {...props}>
       <Card.Header>Attribute Allocation</Card.Header>
       <ListGroup variant='flush'>
         <Attribute value={strength ?? 0} text='Strength' />

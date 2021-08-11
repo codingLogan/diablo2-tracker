@@ -25,7 +25,7 @@ function MyBuildsPage({ history }) {
         setMyBuilds(builds.filter((build) => build.userId === user._id))
       }
     }
-  }, [dispatch, builds, user])
+  }, [history, dispatch, builds, user])
   return (
     <ContainerPage title='My Builds'>
       <>

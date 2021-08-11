@@ -7,6 +7,8 @@ import {
   fetchBuildDetailsReducer,
   fetchBuildsEpic,
   fetchBuildsReducer,
+  newBuildLevelEpic,
+  newBuildLevelReducer,
   postBuildEpic,
   postBuildReducer,
 } from './reducers/buildReducers'
@@ -15,24 +17,14 @@ import {
   fetchClassesReducer,
 } from './reducers/classesReducer'
 
-// Import any epics here
-// import someReducer, { someEpic } from './some'
-
 const rootEpic = combineEpics(
   userLoginEpic,
   fetchBuildsEpic,
   fetchBuildDetailsEpic,
   fetchClassesEpic,
-  postBuildEpic
+  postBuildEpic,
+  newBuildLevelEpic
 )
-// A global error handler example
-// const rootEpic = (action$, store$, dependencies) =>
-//   combineEpics(...epics)(action$, store$, dependencies).pipe(
-//     catchError((error, source) => {
-//       console.error(error)
-//       return source
-//     })
-//   )
 
 const rootReducer = combineReducers({
   userLogin: userLoginReducer,
@@ -40,6 +32,7 @@ const rootReducer = combineReducers({
   buildDetails: fetchBuildDetailsReducer,
   classes: fetchClassesReducer,
   postedBuild: postBuildReducer,
+  newBuildLevel: newBuildLevelReducer,
 })
 
 const localStorageLogin = localStorage.getItem('userLogin')

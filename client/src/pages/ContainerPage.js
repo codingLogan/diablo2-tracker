@@ -7,7 +7,7 @@ function ContainerPage({ title, showHomeButton, children }) {
     <Container className='py-3'>
       <Row className='justify-content-md-center'>
         {/* Used to keep content in the middle and leave space on the sides */}
-        <Col xs={12} md={10} lg={8}>
+        <Col xs={12} sm={12} md={10} lg={8}>
           {showHomeButton && (
             <LinkContainer to='/' className='my-3'>
               <Button variant='light' type='button'>
