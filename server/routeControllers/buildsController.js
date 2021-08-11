@@ -39,7 +39,9 @@ async function getBuilds(req, res, next) {
 async function getBuildById(req, res, next) {
   try {
     const buildId = req.params.id
-    const build = await Build.findById(buildId).populate('buildDetails')
+    const build = await Build.findById(buildId)
+      .populate('buildDetails')
+      .populate('classId')
 
     if (build) {
       res.json(build)
