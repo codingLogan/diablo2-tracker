@@ -31,7 +31,7 @@ function Header() {
             <Nav>
               {user && user.name && (
                 <Navbar.Text>
-                  Hello {user && user.name && <span>{user.name}</span>} |
+                  <em>Hello {user && user.name && <span>{user.name}</span>}</em>
                 </Navbar.Text>
               )}
 
