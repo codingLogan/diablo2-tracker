@@ -3,6 +3,7 @@ import {
   USER_LOGIN,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
+  USER_LOGOUT,
 } from '../constants/userConstants'
 import { catchError, map, mergeMap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
@@ -16,6 +17,8 @@ export function userLoginReducer(state = {}, action) {
       return { loading: false, user: action.payload }
     case USER_LOGIN_FAILURE:
       return { loading: false, error: action.payload }
+    case USER_LOGOUT:
+      return {}
     default:
       return state
   }

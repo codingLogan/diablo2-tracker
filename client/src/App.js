@@ -1,28 +1,24 @@
 import logo from './logo.svg'
 import './App.css'
 import { useDispatch } from 'react-redux'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 import { loginAction } from './redux/actions/userActions'
+import Header from './components/Header'
+import LoginPage from './pages/LoginPage'
+import Footer from './components/Footer'
 
 function App() {
-  const dispatch = useDispatch()
-
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <main>
+        <Container>
+          <Route path='/login' component={LoginPage} />
+        </Container>
+      </main>
+      <Footer />
+    </Router>
   )
 }
 

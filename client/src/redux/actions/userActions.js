@@ -1,4 +1,4 @@
-import { USER_LOGIN } from '../constants/userConstants'
+import { USER_LOGIN, USER_LOGOUT } from '../constants/userConstants'
 
 export function loginAction(email, password) {
   return {
@@ -7,5 +7,11 @@ export function loginAction(email, password) {
       email,
       password,
     },
+  }
+}
+
+export function logoutAction() {
+  return {
+    type: USER_LOGOUT,
   }
 }
