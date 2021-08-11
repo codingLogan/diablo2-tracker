@@ -15,8 +15,8 @@ function App() {
         <Container>
           <Route path='/' component={BuildListPage} exact />
           <Route path='/login' component={LoginPage} />
+          <Route path='/build/create' exact component={CreateBuildPage} />
           <Route path='/builds/:buildId' component={BuildDetailsPage} />
-          <Route path='/builds/create' exact component={CreateBuildPage} />
         </Container>
       </main>
       <Footer />

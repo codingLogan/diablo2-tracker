@@ -21,7 +21,7 @@ function BuildListPage() {
   return (
     <ContainerPage title='Diablo 2 Builds'>
       {user?.name && (
-        <LinkContainer to='/builds/create'>
+        <LinkContainer to='/build/create'>
           <Button className='my-3'>Create A Build</Button>
         </LinkContainer>
       )}
