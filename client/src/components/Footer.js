@@ -5,8 +5,10 @@ function Footer() {
   return (
     <footer>
       <Container>
-        <div>Powered By React/Redux</div>
-        <div>Built by loganras @ github</div>
+        <div>Powered By React/Redux (epic middleware)</div>
+        <div>
+          Built by <strong>loganras</strong> @ github
+        </div>
       </Container>
     </footer>
   )
