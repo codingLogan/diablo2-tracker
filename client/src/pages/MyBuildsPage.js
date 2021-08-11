@@ -47,7 +47,7 @@ function MyBuildsPage({ history }) {
 
         {myBuilds &&
           myBuilds.map((build) => (
-            <BuildCard key={build._id} build={build} showLink />
+            <BuildCard className='my-3' key={build._id} build={build} />
           ))}
       </>
     </ContainerPage>
