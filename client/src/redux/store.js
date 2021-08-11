@@ -7,7 +7,13 @@ import {
   fetchBuildDetailsReducer,
   fetchBuildsEpic,
   fetchBuildsReducer,
+  postBuildEpic,
+  postBuildReducer,
 } from './reducers/buildReducers'
+import {
+  fetchClassesEpic,
+  fetchClassesReducer,
+} from './reducers/classesReducer'
 
 // Import any epics here
 // import someReducer, { someEpic } from './some'
@@ -15,7 +21,9 @@ import {
 const rootEpic = combineEpics(
   userLoginEpic,
   fetchBuildsEpic,
-  fetchBuildDetailsEpic
+  fetchBuildDetailsEpic,
+  fetchClassesEpic,
+  postBuildEpic
 )
 // A global error handler example
 // const rootEpic = (action$, store$, dependencies) =>
@@ -30,6 +38,8 @@ const rootReducer = combineReducers({
   userLogin: userLoginReducer,
   builds: fetchBuildsReducer,
   buildDetails: fetchBuildDetailsReducer,
+  classes: fetchClassesReducer,
+  postedBuild: postBuildReducer,
 })
 
 const initialState = {

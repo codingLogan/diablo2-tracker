@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 import BuildListPage from './pages/BuildListPage'
 import BuildDetailsPage from './pages/BuildDetailsPage'
 import Footer from './components/Footer'
+import CreateBuildPage from './pages/CreateBuildPage'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path='/' component={BuildListPage} exact />
           <Route path='/login' component={LoginPage} />
           <Route path='/builds/:buildId' component={BuildDetailsPage} />
+          <Route path='/builds/create' exact component={CreateBuildPage} />
         </Container>
       </main>
       <Footer />
