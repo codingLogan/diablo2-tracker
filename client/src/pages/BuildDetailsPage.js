@@ -22,7 +22,7 @@ function BuildDetailsPage({ match }) {
   }, [])
 
   return build && !loading ? (
-    <ContainerPage title={build.name}>
+    <ContainerPage title={build.name} showHomeButton>
       <h3>{build.classId.name}</h3>
       <p>{build.summary}</p>
 

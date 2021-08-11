@@ -1,9 +1,15 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import { Nav, Container, Button } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
-function ContainerPage({ title, children }) {
+function ContainerPage({ title, showHomeButton, children }) {
   return (
     <Container className='py-3'>
+      {showHomeButton && (
+        <LinkContainer to='/' className='my-3'>
+          <Button type='button'>Back to Builds</Button>
+        </LinkContainer>
+      )}
       <h1>{title}</h1>
       {children}
     </Container>
