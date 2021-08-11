@@ -29,7 +29,7 @@ async function createBuild(req, res, next) {
 
 async function getBuilds(req, res, next) {
   try {
-    const builds = await Build.find({})
+    const builds = await Build.find({}).populate('classId', '-skillTrees')
     res.json(builds)
   } catch (error) {
     next(error)

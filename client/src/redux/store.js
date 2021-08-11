@@ -2,11 +2,12 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { combineEpics, createEpicMiddleware } from 'redux-observable'
 import { userLoginEpic, userLoginReducer } from './reducers/userReducer'
+import { fetchBuildsEpic, fetchBuildsReducer } from './reducers/buildReducers'
 
 // Import any epics here
 // import someReducer, { someEpic } from './some'
 
-const rootEpic = combineEpics(userLoginEpic)
+const rootEpic = combineEpics(userLoginEpic, fetchBuildsEpic)
 // A global error handler example
 // const rootEpic = (action$, store$, dependencies) =>
 //   combineEpics(...epics)(action$, store$, dependencies).pipe(
@@ -18,6 +19,7 @@ const rootEpic = combineEpics(userLoginEpic)
 
 const rootReducer = combineReducers({
   userLogin: userLoginReducer,
+  builds: fetchBuildsReducer,
 })
 
 const initialState = {
