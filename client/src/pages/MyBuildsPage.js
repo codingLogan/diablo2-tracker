@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
@@ -7,20 +7,27 @@ import ContainerPage from './ContainerPage'
 import BuildCard from '../components/BuildCard'
 import { getBuildsAction } from '../redux/actions/buildActions'
 import useLoggedInUser from '../hooks/useLoggedInUser'
-import { Link } from 'react-router-dom'
 
-function BuildListPage() {
+function MyBuildsPage({ history }) {
   const dispatch = useDispatch()
   const builds = useBuilds()
   const user = useLoggedInUser()
+  const [myBuilds, setMyBuilds] = useState([])
 
+  // Take the list of all builds, and filter it down to the user's
   useEffect(() => {
-    if (!builds) {
-      dispatch(getBuildsAction())
+    if (!user) {
+      history.push('/login')
+    } else {
+      if (!builds) {
+        dispatch(getBuildsAction())
+      } else {
+        setMyBuilds(builds.filter((build) => build.userId === user._id))
+      }
     }
-  }, [dispatch, builds])
+  }, [dispatch, builds, user])
   return (
-    <ContainerPage title='Diablo 2 Builds'>
+    <ContainerPage title='My Builds'>
       <>
         {user?.name && (
           <>
@@ -30,22 +37,16 @@ function BuildListPage() {
               </Button>
             </LinkContainer>
 
-            <LinkContainer to='/mine'>
+            <LinkContainer to='/'>
               <Button variant='secondary' className='m-3'>
-                Show Only My Builds
+                Show All Builds
               </Button>
             </LinkContainer>
           </>
         )}
 
-        {!user?.name && (
-          <p>
-            <Link to='/login'>Log In</Link> to create a build of your own
-          </p>
-        )}
-
-        {builds &&
-          builds.map((build) => (
+        {myBuilds &&
+          myBuilds.map((build) => (
             <BuildCard key={build._id} build={build} showLink />
           ))}
       </>
@@ -53,4 +54,4 @@ function BuildListPage() {
   )
 }
 
-export default BuildListPage
+export default MyBuildsPage
