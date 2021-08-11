@@ -17,7 +17,7 @@ function LoginPage({ history }) {
     if (user && user.token) {
       history.push('/')
     }
-  }, [user])
+  }, [user, history])
 
   const onSubmit = (e) => {
     e.preventDefault()

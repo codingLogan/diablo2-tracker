@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import useClasses from '../hooks/useClasses'
 import useLoggedInUser from '../hooks/useLoggedInUser'
-import { postBuildAction } from '../redux/actions/buildActions'
+import usePostedBuild from '../hooks/usePostedBuild'
+import { getBuildsAction, postBuildAction } from '../redux/actions/buildActions'
 import { getClassesAction } from '../redux/actions/classesActions'
 import ContainerPage from './ContainerPage'
 
@@ -17,13 +18,36 @@ function CreateBuildPage({ history }) {
 
   const user = useLoggedInUser()
   const { loading: classesLoading, classes } = useClasses()
+  const { build: postedBuild } = usePostedBuild()
+
+  console.log({
+    name,
+    summary,
+    characterClass,
+    postedBuild,
+  })
 
   useEffect(() => {
     if (!user) {
       history.push('/login')
     }
     dispatch(getClassesAction())
-  }, [])
+  }, [history, dispatch, user])
+
+  // Only set the initial class as soon as the classes are loaded
+  useEffect(() => {
+    if (classes) {
+      setClass(classes[0]._id)
+    }
+  }, [classes])
+
+  // Let the app requery the list of builds when a new one is created
+  useEffect(() => {
+    if (postedBuild && postedBuild._id) {
+      dispatch(getBuildsAction())
+      history.push(`/builds/${postedBuild._id}`)
+    }
+  }, [dispatch, history, postedBuild])
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -69,6 +93,7 @@ function CreateBuildPage({ history }) {
               <select
                 style={{ width: '100%' }}
                 onChange={(e) => setClass(e.target.value)}
+                value={characterClass}
               >
                 {classes.map((charClass) => (
                   <option key={charClass._id} value={charClass._id}>

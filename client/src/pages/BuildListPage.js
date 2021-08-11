@@ -7,6 +7,7 @@ import ContainerPage from './ContainerPage'
 import BuildCard from '../components/BuildCard'
 import { getBuildsAction } from '../redux/actions/buildActions'
 import useLoggedInUser from '../hooks/useLoggedInUser'
+import { Link } from 'react-router-dom'
 
 function BuildListPage() {
   const dispatch = useDispatch()
@@ -17,16 +18,27 @@ function BuildListPage() {
     if (!builds) {
       dispatch(getBuildsAction())
     }
-  }, [])
+  }, [dispatch, builds])
   return (
     <ContainerPage title='Diablo 2 Builds'>
-      {user?.name && (
-        <LinkContainer to='/build/create'>
-          <Button className='my-3'>Create A Build</Button>
-        </LinkContainer>
-      )}
-      {!user?.name && <p>Log in to create a build</p>}
-      {builds && builds.map((build) => <BuildCard build={build} showLink />)}
+      <>
+        {user?.name && (
+          <LinkContainer to='/build/create'>
+            <Button className='my-3'>Create A Build</Button>
+          </LinkContainer>
+        )}
+
+        {!user?.name && (
+          <p>
+            <Link to='/login'>Log In</Link> to create a build of your own
+          </p>
+        )}
+
+        {builds &&
+          builds.map((build) => (
+            <BuildCard key={build._id} build={build} showLink />
+          ))}
+      </>
     </ContainerPage>
   )
 }

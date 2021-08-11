@@ -42,9 +42,13 @@ const rootReducer = combineReducers({
   postedBuild: postBuildReducer,
 })
 
+const localStorageLogin = localStorage.getItem('userLogin')
+  ? JSON.parse(localStorage.getItem('userLogin'))
+  : {}
+
 const initialState = {
   // any init state you want
-  userLogin: {},
+  userLogin: { user: localStorageLogin },
 }
 
 const epicMiddleWare = createEpicMiddleware()

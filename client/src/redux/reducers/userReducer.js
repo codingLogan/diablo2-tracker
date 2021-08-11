@@ -14,10 +14,12 @@ export function userLoginReducer(state = {}, action) {
     case USER_LOGIN:
       return { loading: true }
     case USER_LOGIN_SUCCESS:
+      localStorage.setItem('userLogin', JSON.stringify(action.payload))
       return { loading: false, user: action.payload }
     case USER_LOGIN_FAILURE:
       return { loading: false, error: action.payload }
     case USER_LOGOUT:
+      localStorage.removeItem('userLogin')
       return {}
     default:
       return state

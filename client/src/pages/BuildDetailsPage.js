@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { LinkContainer } from 'react-router-bootstrap'
 import { Spinner } from 'react-bootstrap'
 import ContainerPage from './ContainerPage'
 import { getBuildDetailsAction } from '../redux/actions/buildActions'
@@ -9,13 +8,13 @@ import useBuildDetails from '../hooks/useBuildDetails'
 function BuildDetailsPage({ match }) {
   const buildId = match.params.buildId
   const dispatch = useDispatch()
-  const { build, loading, error } = useBuildDetails(buildId)
+  const { build, loading } = useBuildDetails(buildId)
 
   useEffect(() => {
     if (!build || build._id !== buildId) {
       dispatch(getBuildDetailsAction(buildId))
     }
-  }, [])
+  }, [dispatch, build, buildId])
 
   return build && !loading ? (
     <ContainerPage title={build.name} showHomeButton>

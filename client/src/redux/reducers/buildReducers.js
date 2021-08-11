@@ -107,7 +107,7 @@ export function postBuildEpic(action$, state$) {
         .pipe(
           map((result) => ({
             type: POST_BUILD_SUCCESS,
-            payload: result,
+            payload: result.response,
           })),
           catchError((error) =>
             of({
