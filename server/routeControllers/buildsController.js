@@ -19,10 +19,10 @@ async function createBuild(req, res, next) {
 
     // Update the build with reference to the details
     newBuild.buildDetails = buildDetails._id
-    newBuild.save()
+    const updatedBuild = await newBuild.save()
 
     res.status(201) // Created
-    res.json(newBuild)
+    res.json(updatedBuild)
   } catch (error) {
     next(error)
   }
@@ -30,7 +30,9 @@ async function createBuild(req, res, next) {
 
 async function getBuilds(req, res, next) {
   try {
-    const builds = await Build.find({}).populate('classId', '-skillTrees')
+    const builds = await Build.find({})
+      .populate('classId', '-skillTrees')
+      .populate('userRef', '_id name')
     res.json(builds)
   } catch (error) {
     next(error)
@@ -43,6 +45,7 @@ async function getBuildById(req, res, next) {
     const build = await Build.findById(buildId)
       .populate('buildDetails')
       .populate('classId')
+      .populate('userRef', '_id name')
 
     if (build) {
       res.json(build)
@@ -65,7 +68,7 @@ async function updateBuildById(req, res, next) {
       throw new Error('Build Not Found')
     }
 
-    checkAuthorization(req, res, build.userId)
+    checkAuthorization(req, res, build.userRef._id)
 
     const { name, summary } = req.body
 
@@ -85,7 +88,7 @@ async function addNewLevel(req, res, next) {
     const buildDetails = await BuildDetails.findOne({ buildId })
     const build = await Build.findById(buildId)
 
-    checkAuthorization(req, res, build.userId)
+    checkAuthorization(req, res, build.userRef._id)
 
     if (!buildDetails) {
       res.status(404)
@@ -120,7 +123,7 @@ async function updateLevel(req, res, next) {
     const buildDetails = await BuildDetails.findOne({ buildId })
     const build = await Build.findById(buildId)
 
-    checkAuthorization(req, res, build.userId)
+    checkAuthorization(req, res, build.userRef._id)
 
     if (!buildDetails) {
       res.status(404)

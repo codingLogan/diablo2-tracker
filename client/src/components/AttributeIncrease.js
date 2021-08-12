@@ -21,15 +21,15 @@ function Attributes({ attributes, props }) {
     )
   }
   return (
-    <Card bg='border-primary' {...props}>
-      <Card.Header>Attribute Allocation</Card.Header>
+    <>
+      <h5>Attribute Allocation</h5>
       <ListGroup variant='flush'>
         <Attribute value={strength ?? 0} text='Strength' />
         <Attribute value={dexterity ?? 0} text='Dexterity' />
         <Attribute value={vitality ?? 0} text='Vitality' />
         <Attribute value={energy ?? 0} text='Energy' />
       </ListGroup>
-    </Card>
+    </>
   )
 }
 

@@ -3,12 +3,16 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Card } from 'react-bootstrap'
 
 function BuildCard({ build, className }) {
+  const charClass = build?.classId?.name ?? 'Unknown Character Class'
+  const userName = build?.userRef?.name ?? 'anonymous'
+
   return (
     <Card className={className}>
-      <Card.Header>{build.name}</Card.Header>
+      <Card.Header>{charClass}</Card.Header>
       <Card.Body>
+        <Card.Title>{build.name}</Card.Title>
         <Card.Subtitle className='mb-2 text-muted'>
-          {build?.classId?.name ?? 'Class Name'}
+          {`created by ${userName}`}
         </Card.Subtitle>
         <Card.Text>{build.summary}</Card.Text>
         <LinkContainer to={`/builds/${build._id}`}>

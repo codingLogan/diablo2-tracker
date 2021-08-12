@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const buildSchema = mongoose.Schema({
-  userId: {
+  userRef: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,

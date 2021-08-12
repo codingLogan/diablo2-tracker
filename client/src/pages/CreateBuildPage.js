@@ -56,7 +56,7 @@ function CreateBuildPage({ history }) {
     dispatch(
       postBuildAction(
         {
-          userId: user._id,
+          userRef: user._id,
           classId: characterClass,
           name,
           summary,

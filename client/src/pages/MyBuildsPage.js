@@ -22,7 +22,7 @@ function MyBuildsPage({ history }) {
       if (!builds) {
         dispatch(getBuildsAction())
       } else {
-        setMyBuilds(builds.filter((build) => build.userId === user._id))
+        setMyBuilds(builds.filter((build) => build.userRef._id === user._id))
       }
     }
   }, [history, dispatch, builds, user])
@@ -30,19 +30,17 @@ function MyBuildsPage({ history }) {
     <ContainerPage title='My Builds'>
       <>
         {user?.name && (
-          <>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <LinkContainer to='/build/create'>
-              <Button variant='primary' className='my-3'>
-                Create A Build
-              </Button>
+              <Button variant='primary'>Create A Build</Button>
             </LinkContainer>
 
             <LinkContainer to='/'>
-              <Button variant='secondary' className='m-3'>
+              <Button className='ms-2' variant='secondary'>
                 Show All Builds
               </Button>
             </LinkContainer>
-          </>
+          </div>
         )}
 
         {myBuilds &&

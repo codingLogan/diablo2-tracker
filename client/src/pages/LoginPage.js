@@ -26,7 +26,15 @@ function LoginPage({ history }) {
 
   return (
     <FormContainer>
-      <ContainerPage title='Please Log In'>
+      <ContainerPage
+        style={{
+          height: '80vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+        title='Please Log In'
+      >
         <Form onSubmit={onSubmit}>
           <Form.Group controlId='email'>
             <Form.Label>Email Address</Form.Label>

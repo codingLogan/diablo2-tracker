@@ -23,19 +23,15 @@ function BuildListPage() {
     <ContainerPage title='Diablo 2 Builds'>
       <>
         {user?.name && (
-          <>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
             <LinkContainer to='/build/create'>
-              <Button variant='primary' className='my-3'>
-                Create A Build
-              </Button>
+              <Button variant='primary'>Create A Build</Button>
             </LinkContainer>
 
-            <LinkContainer to='/mine'>
-              <Button variant='secondary' className='m-3'>
-                Show Only My Builds
-              </Button>
+            <LinkContainer className='ms-2' to='/mine'>
+              <Button variant='secondary'>Show Only My Builds</Button>
             </LinkContainer>
-          </>
+          </div>
         )}
 
         {!user?.name && (
