@@ -10,7 +10,7 @@ function ContainerPage({ title, showHomeButton, children, style }) {
         <Col xs={12} sm={12} md={10} lg={8}>
           {showHomeButton && (
             <LinkContainer to='/' className='my-3'>
-              <Button variant='light' type='button'>
+              <Button variant='secondary' type='button'>
                 Back to Builds
               </Button>
             </LinkContainer>

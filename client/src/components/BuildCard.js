@@ -7,7 +7,7 @@ function BuildCard({ build, className }) {
   const userName = build?.userRef?.name ?? 'anonymous'
 
   return (
-    <Card className={className}>
+    <Card bg='dark' className={className}>
       <Card.Header>{charClass}</Card.Header>
       <Card.Body>
         <Card.Title>{build.name}</Card.Title>

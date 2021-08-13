@@ -34,7 +34,7 @@ function BuildDetailsPage({ match }) {
           </LinkContainer>
         )}
         {build.buildDetails.levels.map((level) => (
-          <Card className='my-2'>
+          <Card bg='primary' className='my-2'>
             <Card.Header>Level {level.level}</Card.Header>
             <Card.Body>
               <div key={level.level} className='py-2'>

@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap'
 
 function Footer() {
   return (
-    <footer>
+    <footer className='py-3'>
       <Container>
         <div>Powered By React/Redux (epic middleware)</div>
         <div>

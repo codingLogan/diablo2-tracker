@@ -1,0 +1,39 @@
+// https://create-react-app.dev/docs/adding-bootstrap
+
+$my-white: #fff;
+$my-black: #000;
+
+// Override default variables before the import
+$body-bg: $my-black;
+$body-color: $my-white;
+
+// main theme colors
+$primary: #741707;
+// $secondary: $gray-600 !default;
+// $success: $green !default;
+// $info: $cyan !default;
+// $warning: $yellow !default;
+// $danger: $red !default;
+// $light: $gray-100 !default;
+// $dark: $gray-900 !default;
+
+// Nav customization
+$navbar-dark-color: $body-color;
+$navbar-dark-toggler-border-color: $my-white;
+
+// Muted text color
+$text-muted: #fbebdb;
+
+// Input colors
+$input-bg: $my-white;
+$input-color: $my-black;
+
+// Link Color
+$link-color: #a42109;
+
+.card-link {
+  font-weight: bold;
+}
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
