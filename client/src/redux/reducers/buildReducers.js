@@ -14,6 +14,10 @@ import {
   NEW_BUILD_LEVEL_SUCCESS,
   NEW_BUILD_LEVEL_FAILURE,
   NEW_BUILD_LEVEL_CLEAR,
+  EDIT_BUILD_LEVEL,
+  EDIT_BUILD_LEVEL_SUCCESS,
+  EDIT_BUILD_LEVEL_FAILURE,
+  EDIT_BUILD_LEVEL_CLEAR,
 } from '../constants/buildConstants'
 import { catchError, map, mergeMap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
@@ -164,6 +168,51 @@ export function newBuildLevelEpic(action$, state$) {
           catchError((error) =>
             of({
               type: NEW_BUILD_LEVEL_FAILURE,
+              payload: error.xhr.response,
+              error: true,
+            })
+          )
+        )
+    )
+  )
+}
+
+export function editBuildLevelReducer(state = {}, action) {
+  switch (action.type) {
+    case EDIT_BUILD_LEVEL:
+      return { loading: true }
+    case EDIT_BUILD_LEVEL_SUCCESS:
+      return { loading: false, buildDetail: action.payload }
+    case EDIT_BUILD_LEVEL_FAILURE:
+      return { loading: false, error: action.payload }
+    case EDIT_BUILD_LEVEL_CLEAR:
+      return {}
+    default:
+      return state
+  }
+}
+
+export function editBuildLevelEpic(action$, state$) {
+  return action$.pipe(
+    ofType(EDIT_BUILD_LEVEL),
+    mergeMap((action) =>
+      ajax
+        .put(
+          `/builds/${action.payload.buildId}/level/${action.payload.levelNumber}`,
+          { improvements: action.payload.improvements },
+          {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${state$.value.userLogin.user.token}`,
+          }
+        )
+        .pipe(
+          map((result) => ({
+            type: NEW_BUILD_LEVEL_SUCCESS,
+            payload: result.response,
+          })),
+          catchError((error) =>
+            of({
+              type: EDIT_BUILD_LEVEL_FAILURE,
               payload: error.xhr.response,
               error: true,
             })

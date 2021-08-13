@@ -1,11 +1,12 @@
 import React from 'react'
-import { Alert, Button, Card, Spinner } from 'react-bootstrap'
+import { Alert, Button, Card, Col, Row, Spinner } from 'react-bootstrap'
 import ContainerPage from './ContainerPage'
 import useBuildDetails from '../hooks/useBuildDetails'
 import Attributes from '../components/AttributeIncrease'
 import SkillAllocation from '../components/SkillAllocation'
 import { LinkContainer } from 'react-router-bootstrap'
 import useLoggedInUser from '../hooks/useLoggedInUser'
+import { Link } from 'react-router-dom'
 
 function BuildDetailsPage({ match }) {
   const buildId = match.params.buildId
@@ -35,7 +36,19 @@ function BuildDetailsPage({ match }) {
         )}
         {build.buildDetails.levels.map((level) => (
           <Card key={level.level} bg='dark' className='my-2'>
-            <Card.Header>Level {level.level}</Card.Header>
+            <Card.Header>
+              <Row className='justify-content-between'>
+                <Col className='text-start'>Level {level.level} </Col>
+
+                {ownerIsViewing && (
+                  <Col className='text-end'>
+                    <Link to={`/builds/${build._id}/level/${level.level}`}>
+                      Edit
+                    </Link>
+                  </Col>
+                )}
+              </Row>
+            </Card.Header>
             <Card.Body>
               <div className='py-2'>
                 {level?.improvements?.skills?.length > 0 ? (

@@ -1,4 +1,5 @@
 import {
+  EDIT_BUILD_LEVEL,
   FETCH_BUILDS,
   FETCH_BUILD_DETAILS,
   NEW_BUILD_LEVEL,
@@ -32,6 +33,17 @@ export function newBuildLevelAction(buildId, improvements) {
     payload: {
       improvements,
       buildId,
+    },
+  }
+}
+
+export function editBuildLevelAction(buildId, levelNumber, improvements) {
+  return {
+    type: EDIT_BUILD_LEVEL,
+    payload: {
+      improvements,
+      buildId,
+      levelNumber,
     },
   }
 }

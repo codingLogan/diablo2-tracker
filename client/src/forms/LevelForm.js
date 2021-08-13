@@ -1,17 +1,19 @@
 import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 
+export const defaultAttributes = {
+  strength: 0,
+  dexterity: 0,
+  vitality: 0,
+  energy: 0,
+}
+
 function LevelForm({
   onSubmit = () => {},
   skills = [], // What skills should be selectable by this charcter
   skill = '', // The current skill selection
   setSkill,
-  attributes = {
-    strength: 0,
-    dexterity: 0,
-    vitality: 0,
-    energy: 0,
-  },
+  attributes = defaultAttributes,
   setAttributes,
 }) {
   return (
