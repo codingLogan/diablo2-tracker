@@ -18,6 +18,10 @@ import {
   EDIT_BUILD_LEVEL_SUCCESS,
   EDIT_BUILD_LEVEL_FAILURE,
   EDIT_BUILD_LEVEL_CLEAR,
+  EDIT_BUILD,
+  EDIT_BUILD_SUCCESS,
+  EDIT_BUILD_FAILURE,
+  EDIT_BUILD_CLEAR,
 } from '../constants/buildConstants'
 import { catchError, map, mergeMap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
@@ -123,6 +127,47 @@ export function postBuildEpic(action$, state$) {
           catchError((error) =>
             of({
               type: POST_BUILD_FAILURE,
+              payload: error.xhr.response,
+              error: true,
+            })
+          )
+        )
+    )
+  )
+}
+
+export function editBuildReducer(state = {}, action) {
+  switch (action.type) {
+    case EDIT_BUILD:
+      return { loading: true }
+    case EDIT_BUILD_SUCCESS:
+      return { loading: false, build: action.payload }
+    case EDIT_BUILD_FAILURE:
+      return { loading: false, error: action.payload }
+    case EDIT_BUILD_CLEAR:
+      return {}
+    default:
+      return state
+  }
+}
+
+export function editBuildEpic(action$, state$) {
+  return action$.pipe(
+    ofType(EDIT_BUILD),
+    mergeMap((action) =>
+      ajax
+        .put(`/builds/${action.buildId}`, action.payload, {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${action.token}`,
+        })
+        .pipe(
+          map((result) => ({
+            type: POST_BUILD_SUCCESS,
+            payload: result.response,
+          })),
+          catchError((error) =>
+            of({
+              type: EDIT_BUILD_FAILURE,
               payload: error.xhr.response,
               error: true,
             })

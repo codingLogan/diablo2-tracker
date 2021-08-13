@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Form } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
 export const defaultAttributes = {
   strength: 0,
@@ -9,6 +10,7 @@ export const defaultAttributes = {
 }
 
 function LevelForm({
+  buildId,
   onSubmit = () => {},
   skills = [], // What skills should be selectable by this charcter
   skill = '', // The current skill selection
@@ -93,9 +95,14 @@ function LevelForm({
         />
       </Form.Group>
 
-      <Button className='mt-3' type='submit'>
+      <Button className='mt-3 me-1' type='submit'>
         Submit
       </Button>
+      <LinkContainer to={`/builds/${buildId}`}>
+        <Button variant='secondary' className='mt-3' type='button'>
+          Back to Build
+        </Button>
+      </LinkContainer>
     </Form>
   )
 }

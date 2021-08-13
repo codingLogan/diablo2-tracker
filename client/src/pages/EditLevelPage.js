@@ -32,9 +32,9 @@ function EditLevelPage({ match, history }) {
         (levelObj) => levelObj.level === editLevelNumber
       )
 
-      if (buildLevel) {
+      if (buildLevel && buildLevel?.improvements?.skills?.length) {
         // TODO make this an array, or object with selection and a number
-        setSkill(buildLevel?.improvements?.skills[0].name ?? '')
+        setSkill(buildLevel?.improvements?.skills[0].name)
         setAttributes(buildLevel?.improvements?.attributes ?? defaultAttributes)
       }
     }
@@ -74,6 +74,7 @@ function EditLevelPage({ match, history }) {
       <ContainerPage title={`Edit Level ${editLevelNumber ?? ''} Entry`}>
         {!loadingClasses && !loadingBuild && skills ? (
           <LevelForm
+            buildId={buildId}
             onSubmit={onSubmit}
             skills={skills}
             skill={skill}

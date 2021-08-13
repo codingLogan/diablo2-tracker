@@ -59,6 +59,7 @@ function AddNewLevelPage({ match, history }) {
       <ContainerPage title='New Level Entry'>
         {!loadingClasses && !loadingBuild && skills ? (
           <LevelForm
+            buildId={buildId}
             onSubmit={onSubmit}
             skills={skills}
             skill={skill}

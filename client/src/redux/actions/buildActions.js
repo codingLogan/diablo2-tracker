@@ -1,4 +1,5 @@
 import {
+  EDIT_BUILD,
   EDIT_BUILD_LEVEL,
   FETCH_BUILDS,
   FETCH_BUILD_DETAILS,
@@ -23,6 +24,15 @@ export function postBuildAction(build, userToken) {
   return {
     type: POST_BUILD,
     payload: build,
+    token: userToken,
+  }
+}
+
+export function editBuildAction(buildId, build, userToken) {
+  return {
+    type: EDIT_BUILD,
+    payload: build,
+    buildId,
     token: userToken,
   }
 }
