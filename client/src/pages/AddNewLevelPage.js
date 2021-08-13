@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Spinner } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import FormContainer from '../components/FormContainer'
+import LevelForm from '../forms/LevelForm'
 import useBuildDetails from '../hooks/useBuildDetails'
 import useClasses from '../hooks/useClasses'
 import useNewBuildLevel from '../hooks/useNewBuildLevel'
@@ -12,10 +13,10 @@ import ContainerPage from './ContainerPage'
 function AddNewLevelPage({ match, history }) {
   const buildId = match.params.buildId
   const dispatch = useDispatch()
-  const { build } = useBuildDetails(buildId)
+  const { build, loading: loadingBuild } = useBuildDetails(buildId)
   const { buildDetail } = useNewBuildLevel()
 
-  const { classes } = useClasses()
+  const { classes, loading: loadingClasses } = useClasses([])
   const [skills, setSkills] = useState([])
   const [skill, setSkill] = useState('')
   const [attributes, setAttributes] = useState({
@@ -23,11 +24,6 @@ function AddNewLevelPage({ match, history }) {
     dexterity: 0,
     vitality: 0,
     energy: 0,
-  })
-
-  console.log('Component State Review', {
-    skill,
-    attributes,
   })
 
   useEffect(() => {
@@ -61,86 +57,18 @@ function AddNewLevelPage({ match, history }) {
   return (
     <FormContainer>
       <ContainerPage title='New Level Entry'>
-        <Form className='mt-4' onSubmit={onSubmit}>
-          <label htmlFor='skillselect'>Select a Skill</label>
-          <select
-            style={{ width: '100%' }}
-            onChange={(e) => setSkill(e.target.value)}
-            value={skill}
-            id='skillselect'
-          >
-            {skills.map((skillTree) => (
-              <optgroup key={skillTree.name} label={skillTree.name}>
-                {skillTree.skills.map((skill) => (
-                  <option key={skill.name} value={skill.name}>
-                    {skill.name}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-
-          <Form.Group className='py-2' controlId='strength'>
-            <Form.Label>Strength</Form.Label>
-            <Form.Control
-              type='number'
-              placeholder='Enter strenth points'
-              value={attributes.strength}
-              onChange={(e) =>
-                setAttributes({
-                  ...attributes,
-                  strength: Number(e.target.value),
-                })
-              }
-            />
-          </Form.Group>
-
-          <Form.Group className='py-2' controlId='dexterity'>
-            <Form.Label>Dexterity</Form.Label>
-            <Form.Control
-              type='number'
-              placeholder='Enter dexterity points'
-              value={attributes.dexterity}
-              onChange={(e) =>
-                setAttributes({
-                  ...attributes,
-                  dexterity: Number(e.target.value),
-                })
-              }
-            />
-          </Form.Group>
-
-          <Form.Group className='py-2' controlId='vitality'>
-            <Form.Label>Vitality</Form.Label>
-            <Form.Control
-              type='number'
-              placeholder='Enter vitality points'
-              value={attributes.vitality}
-              onChange={(e) =>
-                setAttributes({
-                  ...attributes,
-                  vitality: Number(e.target.value),
-                })
-              }
-            />
-          </Form.Group>
-
-          <Form.Group className='py-2' controlId='energy'>
-            <Form.Label>Energy</Form.Label>
-            <Form.Control
-              type='number'
-              placeholder='Enter energy points'
-              value={attributes.energy}
-              onChange={(e) =>
-                setAttributes({ ...attributes, energy: Number(e.target.value) })
-              }
-            />
-          </Form.Group>
-
-          <Button className='mt-3' type='submit'>
-            Submit
-          </Button>
-        </Form>
+        {!loadingClasses && !loadingBuild && skills ? (
+          <LevelForm
+            onSubmit={onSubmit}
+            skills={skills}
+            skill={skill}
+            setSkill={setSkill}
+            attributes={attributes}
+            setAttributes={setAttributes}
+          />
+        ) : (
+          <Spinner />
+        )}
       </ContainerPage>
     </FormContainer>
   )

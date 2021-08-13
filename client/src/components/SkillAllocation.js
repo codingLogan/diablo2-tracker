@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, ListGroup } from 'react-bootstrap'
+import { ListGroup } from 'react-bootstrap'
 
 function SkillAllocation({ skills, ...props }) {
   return (

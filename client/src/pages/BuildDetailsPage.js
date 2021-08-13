@@ -34,17 +34,17 @@ function BuildDetailsPage({ match }) {
           </LinkContainer>
         )}
         {build.buildDetails.levels.map((level) => (
-          <Card bg='primary' className='my-2'>
+          <Card key={level.level} bg='dark' className='my-2'>
             <Card.Header>Level {level.level}</Card.Header>
             <Card.Body>
-              <div key={level.level} className='py-2'>
+              <div className='py-2'>
                 {level?.improvements?.skills?.length > 0 ? (
                   <SkillAllocation
                     className='my-3'
                     skills={level.improvements.skills}
                   />
                 ) : (
-                  <Alert variant='dark'>No Skills Allocated</Alert>
+                  <Alert variant='info'>No Skills Allocated</Alert>
                 )}
 
                 {level?.improvements?.attributes ? (
@@ -53,7 +53,7 @@ function BuildDetailsPage({ match }) {
                     attributes={level.improvements.attributes}
                   />
                 ) : (
-                  <Alert variant='dark'>No Attributes Allocated</Alert>
+                  <Alert variant='info'>No Attributes Allocated</Alert>
                 )}
               </div>
             </Card.Body>
