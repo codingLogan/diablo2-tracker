@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Form, Button, Spinner } from 'react-bootstrap'
+import { Spinner } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import FormContainer from '../components/FormContainer'
+import BaseBuildForm from '../forms/BaseBuildForm'
 import useClasses from '../hooks/useClasses'
 import useLoggedInUser from '../hooks/useLoggedInUser'
 import usePostedBuild from '../hooks/usePostedBuild'
@@ -20,13 +21,6 @@ function CreateBuildPage({ history }) {
   const user = useLoggedInUser()
   const { loading: classesLoading, classes } = useClasses()
   const { build: postedBuild } = usePostedBuild()
-
-  console.log({
-    name,
-    summary,
-    characterClass,
-    postedBuild,
-  })
 
   useEffect(() => {
     if (!user) {
@@ -68,48 +62,20 @@ function CreateBuildPage({ history }) {
   return (
     <FormContainer>
       <ContainerPage title='Create your build' showHomeButton>
-        <Form onSubmit={onSubmit}>
-          <Form.Group controlId='name'>
-            <Form.Label>Build Name</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Enter the build name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group controlId='summary'>
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              as='textarea'
-              placeholder='Enter a descriptive summary'
-              value={summary}
-              onChange={(e) => setSummary(e.target.value)}
-            />
-          </Form.Group>
-
-          {classesLoading && <Spinner />}
-          {classes && (
-            <div className='my-3'>
-              <select
-                style={{ width: '100%' }}
-                onChange={(e) => setClass(e.target.value)}
-                value={characterClass}
-              >
-                {classes.map((charClass) => (
-                  <option key={charClass._id} value={charClass._id}>
-                    {charClass.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          <Button type='submit' className='my-3'>
-            Create Build
-          </Button>
-        </Form>
+        {!classesLoading && classes ? (
+          <BaseBuildForm
+            onSubmit={onSubmit}
+            classes={classes}
+            name={name}
+            setName={setName}
+            summary={summary}
+            setSummary={setSummary}
+            characterClass={characterClass}
+            setClass={setClass}
+          />
+        ) : (
+          <Spinner animation='grow' />
+        )}
       </ContainerPage>
     </FormContainer>
   )
