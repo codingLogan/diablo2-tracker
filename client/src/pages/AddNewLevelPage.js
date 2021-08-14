@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
+import HeaderBlock from '../components/HeaderBlock'
 import LoadingSpinner from '../components/LoadingSpinner'
 import LevelForm from '../forms/LevelForm'
 import useBuildDetails from '../hooks/useBuildDetails'
@@ -15,6 +16,7 @@ function AddNewLevelPage({ match, history }) {
   const dispatch = useDispatch()
   const { build, loading: loadingBuild } = useBuildDetails(buildId)
   const { buildDetail } = useNewBuildLevel()
+  const { currentLevel } = useSelector((state) => state.currentLevel)
 
   const { classes, loading: loadingClasses } = useClasses([])
   const [skills, setSkills] = useState([])
@@ -56,7 +58,13 @@ function AddNewLevelPage({ match, history }) {
 
   return (
     <FormContainer>
-      <ContainerPage title='New Level Entry'>
+      <ContainerPage title='Create New Level'>
+        <HeaderBlock
+          header={build?.name ?? ''}
+          subHeader={build?.classId?.name ?? ''}
+        />
+        <div>{currentLevel ? `Level ${currentLevel + 1}` : 'Next Level'}</div>
+
         {!loadingClasses && !loadingBuild && skills ? (
           <LevelForm
             buildId={buildId}

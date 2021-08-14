@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { storeBuildLevelAction } from '../redux/actions/buildActions'
 
 const useBuildSummary = (buildId) => {
+  const dispatch = useDispatch()
   const [buildSummary, setBuildSummary] = useState()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -18,6 +21,9 @@ const useBuildSummary = (buildId) => {
         })
         .then((data) => {
           setBuildSummary(data)
+          dispatch(
+            storeBuildLevelAction(buildId ?? null, data?.currentLevel ?? null)
+          )
           setLoading(false)
         })
         .catch((error) => {
@@ -35,6 +41,7 @@ const useBuildSummary = (buildId) => {
     setLoading,
     error,
     setError,
+    dispatch,
   ])
 
   return { buildSummary, loading, error }

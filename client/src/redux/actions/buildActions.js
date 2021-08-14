@@ -5,6 +5,7 @@ import {
   FETCH_BUILD_DETAILS,
   NEW_BUILD_LEVEL,
   POST_BUILD,
+  STORE_CURRENT_LEVEL,
 } from '../constants/buildConstants'
 
 export function getBuildsAction() {
@@ -54,6 +55,16 @@ export function editBuildLevelAction(buildId, levelNumber, improvements) {
       improvements,
       buildId,
       levelNumber,
+    },
+  }
+}
+
+export function storeBuildLevelAction(buildId, currentLevel) {
+  return {
+    type: STORE_CURRENT_LEVEL,
+    payload: {
+      buildId,
+      currentLevel,
     },
   }
 }

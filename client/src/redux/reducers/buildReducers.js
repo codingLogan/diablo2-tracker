@@ -22,6 +22,7 @@ import {
   EDIT_BUILD_SUCCESS,
   EDIT_BUILD_FAILURE,
   EDIT_BUILD_CLEAR,
+  STORE_CURRENT_LEVEL,
 } from '../constants/buildConstants'
 import { catchError, map, mergeMap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
@@ -265,4 +266,19 @@ export function editBuildLevelEpic(action$, state$) {
         )
     )
   )
+}
+
+export function storeBuildLevelReducer(
+  state = { buildId: null, currentLevel: null },
+  action
+) {
+  switch (action.type) {
+    case STORE_CURRENT_LEVEL:
+      return {
+        buildId: action.payload.buildId,
+        currentLevel: action.payload.currentLevel,
+      }
+    default:
+      return state
+  }
 }

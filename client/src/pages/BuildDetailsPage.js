@@ -83,7 +83,7 @@ function BuildDetailsPage({ match }) {
 
         {ownerIsViewing && (
           <LinkContainer className='mb-4' to={`/builds/${build._id}/level`}>
-            <Button type='button'>Add New Level</Button>
+            <Button type='button'>Level Up!</Button>
           </LinkContainer>
         )}
         {build.buildDetails.levels.map((level) => (
