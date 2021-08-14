@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import OptGroupSelect from '../formHelpers/OptGroupSelect'
 
 export const defaultAttributes = {
   strength: 0,
@@ -20,23 +21,26 @@ function LevelForm({
 }) {
   return (
     <Form className='mt-4' onSubmit={onSubmit}>
-      <label htmlFor='skillselect'>Select a Skill</label>
-      <select
-        style={{ width: '100%' }}
+      <OptGroupSelect
+        id='skillselect'
+        label='Select a skill'
         onChange={(e) => setSkill(e.target.value)}
         value={skill}
-        id='skillselect'
-      >
-        {skills.map((skillTree) => (
-          <optgroup key={skillTree.name} label={skillTree.name}>
-            {skillTree.skills.map((skill) => (
-              <option key={skill.name} value={skill.name}>
-                {skill.name}
-              </option>
-            ))}
-          </optgroup>
-        ))}
-      </select>
+        optgroupOptions={skills.map((tree) => {
+          // We need a map of group.name, group.options
+          // options is option.value and option.text
+
+          const mappedSkills = tree.skills.map((skill) => ({
+            value: skill.name,
+            text: skill.name,
+          }))
+
+          return {
+            name: tree.name,
+            options: mappedSkills,
+          }
+        })}
+      />
 
       <Form.Group className='py-2' controlId='strength'>
         <Form.Label>Strength</Form.Label>
