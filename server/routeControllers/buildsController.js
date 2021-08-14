@@ -58,6 +58,27 @@ async function getBuildById(req, res, next) {
   }
 }
 
+async function getBuildSummary(req, res, next) {
+  try {
+    const buildId = req.params.id
+    const build = await Build.findById(buildId)
+      .populate('buildDetails')
+      .populate('classId')
+      .populate('userRef', '_id name')
+
+    if (build && build.buildDetails) {
+      const summary = build.buildDetails.getSummary()
+
+      res.json(summary)
+    } else {
+      res.status(404)
+      throw new Error('Build could not be found')
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
 async function updateBuildById(req, res, next) {
   try {
     const buildId = req.params.id
@@ -185,6 +206,7 @@ export {
   createBuild,
   getBuilds,
   getBuildById,
+  getBuildSummary,
   updateBuildById,
   addNewLevel,
   updateLevel,
