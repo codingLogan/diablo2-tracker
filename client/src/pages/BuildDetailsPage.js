@@ -13,7 +13,11 @@ function BuildDetailsPage({ match }) {
   const buildId = match.params.buildId
   const { build, loading } = useBuildDetails(buildId)
   const user = useLoggedInUser()
-  const { buildSummary, loading: loadingSummary } = useBuildSummary(buildId)
+  const {
+    buildSummary,
+    loading: loadingSummary,
+    error: errorSummary,
+  } = useBuildSummary(buildId)
   let ownerIsViewing = build?.userRef?._id === user?._id
 
   return build && !loading ? (
@@ -29,7 +33,12 @@ function BuildDetailsPage({ match }) {
       <p>{build.summary}</p>
 
       <h4 className='mt-5'>Build Summary</h4>
-      {loadingSummary ? (
+
+      {errorSummary && !loadingSummary ? (
+        <Alert variant='danger'>
+          Server failed to load the summary, try again later
+        </Alert>
+      ) : loadingSummary || !buildSummary ? (
         <Spinner variant='primary' animation='grow' />
       ) : (
         <Card bg='primary'>
@@ -43,7 +52,9 @@ function BuildDetailsPage({ match }) {
               0 ? (
                 Object.getOwnPropertyNames(buildSummary.skillsTotals).map(
                   (property) => (
-                    <div>{`${property}: ${buildSummary.skillsTotals[property]}`}</div>
+                    <div
+                      key={`build${property}`}
+                    >{`${property}: ${buildSummary.skillsTotals[property]}`}</div>
                   )
                 )
               ) : (
