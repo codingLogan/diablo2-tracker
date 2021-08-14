@@ -78,14 +78,15 @@ function BuildDetailsPage({ match }) {
         </Card>
       )}
 
-      <div className='mt-5'>
+      {ownerIsViewing && (
+        <LinkContainer className='my-3' to={`/builds/${build._id}/level`}>
+          <Button type='button'>Level Up!</Button>
+        </LinkContainer>
+      )}
+
+      <div className='mt-3'>
         <h3 className='mb-4'>Progression By Level</h3>
 
-        {ownerIsViewing && (
-          <LinkContainer className='mb-4' to={`/builds/${build._id}/level`}>
-            <Button type='button'>Level Up!</Button>
-          </LinkContainer>
-        )}
         {build.buildDetails.levels.map((level) => (
           <Card key={level.level} bg='dark' className='my-2'>
             <Card.Header>
