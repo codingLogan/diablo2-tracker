@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Spinner } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import FormContainer from '../components/FormContainer'
+import LoadingSpinner from '../components/LoadingSpinner'
 import BaseBuildForm from '../forms/BaseBuildForm'
 import useClasses from '../hooks/useClasses'
 import useLoggedInUser from '../hooks/useLoggedInUser'
@@ -74,7 +74,7 @@ function CreateBuildPage({ history }) {
             setClass={setClass}
           />
         ) : (
-          <Spinner animation='grow' />
+          <LoadingSpinner />
         )}
       </ContainerPage>
     </FormContainer>

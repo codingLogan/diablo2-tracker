@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Spinner } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import FormContainer from '../components/FormContainer'
+import LoadingSpinner from '../components/LoadingSpinner'
 import LevelForm, { defaultAttributes } from '../forms/LevelForm'
 import useBuildDetails from '../hooks/useBuildDetails'
 import useClasses from '../hooks/useClasses'
@@ -83,7 +83,7 @@ function EditLevelPage({ match, history }) {
             setAttributes={setAttributes}
           />
         ) : (
-          <Spinner />
+          <LoadingSpinner />
         )}
       </ContainerPage>
     </FormContainer>

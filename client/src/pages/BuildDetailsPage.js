@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Button, Card, Col, Row, Spinner } from 'react-bootstrap'
+import { Alert, Button, Card, Col, Row } from 'react-bootstrap'
 import ContainerPage from './ContainerPage'
 import useBuildDetails from '../hooks/useBuildDetails'
 import Attributes from '../components/AttributeIncrease'
@@ -8,6 +8,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import useLoggedInUser from '../hooks/useLoggedInUser'
 import { Link } from 'react-router-dom'
 import useBuildSummary from '../hooks/useBuildSummary'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 function BuildDetailsPage({ match }) {
   const buildId = match.params.buildId
@@ -39,7 +40,7 @@ function BuildDetailsPage({ match }) {
           Server failed to load the summary, try again later
         </Alert>
       ) : loadingSummary || !buildSummary ? (
-        <Spinner variant='primary' animation='grow' />
+        <LoadingSpinner />
       ) : (
         <Card bg='primary'>
           <Card.Header>
@@ -123,7 +124,7 @@ function BuildDetailsPage({ match }) {
       </div>
     </ContainerPage>
   ) : (
-    <Spinner />
+    <LoadingSpinner />
   )
 }
 
