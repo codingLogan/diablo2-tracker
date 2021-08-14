@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, ListGroup } from 'react-bootstrap'
+import { Alert, ListGroup } from 'react-bootstrap'
 
 function Attribute({ value, text }) {
   return value ? (
@@ -9,16 +9,12 @@ function Attribute({ value, text }) {
   ) : null
 }
 
-function Attributes({ attributes, props, className }) {
+function Attributes({ attributes, className }) {
   const { strength, dexterity, vitality, energy } = attributes
-  const noPoints = strength && !dexterity && !vitality && !energy
+  const noPoints = !strength && !dexterity && !vitality && !energy
 
   if (noPoints) {
-    return (
-      <Card bg='danger' {...props}>
-        <Card.Header>No Points Allocated</Card.Header>
-      </Card>
-    )
+    return <Alert variant='info'>No Attributes Allocated</Alert>
   }
   return (
     <div className={className}>

@@ -9,6 +9,7 @@ import useLoggedInUser from '../hooks/useLoggedInUser'
 import { Link } from 'react-router-dom'
 import useBuildSummary from '../hooks/useBuildSummary'
 import LoadingSpinner from '../components/LoadingSpinner'
+import { defaultAttributes } from '../forms/LevelForm'
 
 function BuildDetailsPage({ match }) {
   const buildId = match.params.buildId
@@ -66,14 +67,10 @@ function BuildDetailsPage({ match }) {
                 <Alert variant='info'>No Skills Allocated</Alert>
               )}
 
-              {buildSummary.attributesTotals ? (
-                <Attributes
-                  className='my-3'
-                  attributes={buildSummary.attributesTotals}
-                />
-              ) : (
-                <Alert variant='info'>No Attributes Allocated</Alert>
-              )}
+              <Attributes
+                className='my-3'
+                attributes={buildSummary?.attributesTotals ?? defaultAttributes}
+              />
             </div>
           </Card.Body>
         </Card>
@@ -113,14 +110,12 @@ function BuildDetailsPage({ match }) {
                   <Alert variant='info'>No Skills Allocated</Alert>
                 )}
 
-                {level?.improvements?.attributes ? (
-                  <Attributes
-                    className='my-3'
-                    attributes={level.improvements.attributes}
-                  />
-                ) : (
-                  <Alert variant='info'>No Attributes Allocated</Alert>
-                )}
+                <Attributes
+                  className='my-3'
+                  attributes={
+                    level?.improvements?.attributes ?? defaultAttributes
+                  }
+                />
               </div>
             </Card.Body>
           </Card>
