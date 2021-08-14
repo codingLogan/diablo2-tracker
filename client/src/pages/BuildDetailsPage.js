@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import useBuildSummary from '../hooks/useBuildSummary'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { defaultAttributes } from '../forms/LevelForm'
+import HeaderBlock from '../components/HeaderBlock'
 
 function BuildDetailsPage({ match }) {
   const buildId = match.params.buildId
@@ -24,11 +25,12 @@ function BuildDetailsPage({ match }) {
 
   return build && !loading ? (
     <ContainerPage title={build.name} showHomeButton>
-      <h3>{build.classId.name}</h3>
-      <h4>
-        {`Created by ${build?.userRef?.name ?? 'anonymous'}`}{' '}
-        {ownerIsViewing && "(That's you!)"}
-      </h4>
+      <HeaderBlock
+        header={build.classId.name}
+        subHeader={`Created by ${build?.userRef?.name ?? 'anonymous'}${
+          ownerIsViewing ? ' (you)' : ''
+        }`}
+      />
 
       <h4 className='mt-5'>Description</h4>
       <p>{build.summary}</p>
