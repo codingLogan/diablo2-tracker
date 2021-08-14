@@ -7,11 +7,13 @@ import SkillAllocation from '../components/SkillAllocation'
 import { LinkContainer } from 'react-router-bootstrap'
 import useLoggedInUser from '../hooks/useLoggedInUser'
 import { Link } from 'react-router-dom'
+import useBuildSummary from '../hooks/useBuildSummary'
 
 function BuildDetailsPage({ match }) {
   const buildId = match.params.buildId
   const { build, loading } = useBuildDetails(buildId)
   const user = useLoggedInUser()
+  const { buildSummary, loading: loadingSummary } = useBuildSummary(buildId)
   let ownerIsViewing = build?.userRef?._id === user?._id
 
   return build && !loading ? (
@@ -25,6 +27,41 @@ function BuildDetailsPage({ match }) {
 
       <h4 className='mt-5'>Description</h4>
       <p>{build.summary}</p>
+
+      <h4 className='mt-5'>Build Summary</h4>
+      {loadingSummary ? (
+        <Spinner variant='primary' animation='grow' />
+      ) : (
+        <Card bg='primary'>
+          <Card.Header>
+            Character is at Level {buildSummary.currentLevel}
+          </Card.Header>
+          <Card.Body>
+            <div>
+              <h5>Skill Allocation</h5>
+              {Object.getOwnPropertyNames(buildSummary.skillsTotals).length >
+              0 ? (
+                Object.getOwnPropertyNames(buildSummary.skillsTotals).map(
+                  (property) => (
+                    <div>{`${property}: ${buildSummary.skillsTotals[property]}`}</div>
+                  )
+                )
+              ) : (
+                <Alert variant='info'>No Skills Allocated</Alert>
+              )}
+
+              {buildSummary.attributesTotals ? (
+                <Attributes
+                  className='my-3'
+                  attributes={buildSummary.attributesTotals}
+                />
+              ) : (
+                <Alert variant='info'>No Attributes Allocated</Alert>
+              )}
+            </div>
+          </Card.Body>
+        </Card>
+      )}
 
       <div className='mt-5'>
         <h3 className='mb-4'>Progression By Level</h3>
