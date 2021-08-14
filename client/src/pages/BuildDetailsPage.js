@@ -28,10 +28,14 @@ function BuildDetailsPage({ match }) {
         {`Created by ${build?.userRef?.name ?? 'anonymous'}`}{' '}
         {ownerIsViewing && "(That's you!)"}
       </h4>
-      <hr />
 
       <h4 className='mt-5'>Description</h4>
       <p>{build.summary}</p>
+
+      {ownerIsViewing && (
+        <Link to={`/builds/${buildId}/edit`}>Edit the information above</Link>
+      )}
+      <hr />
 
       <h4 className='mt-5'>Build Summary</h4>
 

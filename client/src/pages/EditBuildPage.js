@@ -41,7 +41,6 @@ function EditBuildPage({ history, match }) {
     if (builds) {
       const build = builds.find((appBuild) => appBuild._id === buildId)
 
-      console.log('EDIT BUILD', { build, builds })
       if (build) {
         setName(build.name)
         setSummary(build.summary)

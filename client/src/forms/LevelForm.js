@@ -96,7 +96,7 @@ function LevelForm({
       </Form.Group>
 
       <Button className='mt-3 me-1' type='submit'>
-        Submit
+        Save Level
       </Button>
       <LinkContainer to={`/builds/${buildId}`}>
         <Button variant='secondary' className='mt-3' type='button'>
