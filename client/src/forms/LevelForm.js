@@ -33,6 +33,19 @@ function LevelForm({
         skillTrees={skills}
       />
 
+      {/* Otherwise, render all the currently selected skills */}
+      <Button
+        className='my-3'
+        type='button'
+        onClick={() => {
+          const newSkills = [...selectedSkills]
+          newSkills.push({ name: '' })
+          setSelectedSkills(newSkills)
+        }}
+      >
+        Add Another Skill
+      </Button>
+
       <Form.Group className='py-2' controlId='strength'>
         <Form.Label>Strength</Form.Label>
         <Form.Control
