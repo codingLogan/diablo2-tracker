@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button, Col, Row } from 'react-bootstrap'
 import OptGroupSelect from './OptGroupSelect'
 
 /**
@@ -11,6 +12,7 @@ function SkillSelect({
   label = 'Select a skill',
   onChange,
   values,
+  setSelectedSkills,
   skillTrees = [],
 }) {
   const optGroupOptions = skillTrees.map((tree) => {
@@ -29,15 +31,32 @@ function SkillSelect({
   })
 
   return values.map((selectedSkill, index) => (
-    <OptGroupSelect
-      key={index}
-      id={id}
-      dataIndex={index}
-      label={label}
-      onChange={onChange}
-      value={selectedSkill.name}
-      optgroupOptions={optGroupOptions}
-    />
+    <Row key={index}>
+      <Col md={9}>
+        <OptGroupSelect
+          id={id}
+          dataIndex={index}
+          label={label}
+          onChange={onChange}
+          value={selectedSkill.name}
+          optgroupOptions={optGroupOptions}
+        />
+      </Col>
+      <Col md={2} style={{ marginTop: 'auto' }}>
+        <Button
+          variant='danger'
+          type='button'
+          onClick={() => {
+            const newSkills = [...values]
+            newSkills.splice(index, 1)
+            setSelectedSkills(newSkills)
+          }}
+          disabled={values.length <= 1}
+        >
+          Remove
+        </Button>
+      </Col>
+    </Row>
   ))
 }
 

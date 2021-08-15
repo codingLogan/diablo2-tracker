@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import SkillSelect from '../formHelpers/SkillSelect'
@@ -14,7 +14,7 @@ function LevelForm({
   buildId,
   onSubmit = () => {},
   skills = [], // What skills should be selectable by this charcter
-  selectedSkills = [{}],
+  selectedSkills = [],
   setSelectedSkills,
   attributes = defaultAttributes,
   setAttributes,
@@ -30,6 +30,7 @@ function LevelForm({
           setSelectedSkills(newSkills)
         }}
         values={selectedSkills}
+        setSelectedSkills={setSelectedSkills}
         skillTrees={skills}
       />
 
@@ -39,7 +40,7 @@ function LevelForm({
         type='button'
         onClick={() => {
           const newSkills = [...selectedSkills]
-          newSkills.push({ name: '' })
+          newSkills.push({ name: selectedSkills[0].name })
           setSelectedSkills(newSkills)
         }}
       >
