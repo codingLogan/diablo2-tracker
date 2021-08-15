@@ -1,6 +1,13 @@
 import React from 'react'
 
-function OptGroupSelect({ id, label, onChange, value, optgroupOptions }) {
+function OptGroupSelect({
+  id,
+  label,
+  onChange,
+  value,
+  optgroupOptions,
+  dataIndex,
+}) {
   return (
     <>
       <label htmlFor={id}>{label}</label>
@@ -8,6 +15,7 @@ function OptGroupSelect({ id, label, onChange, value, optgroupOptions }) {
         style={{ width: '100%', padding: '0.5em', borderRadius: '4px' }}
         onChange={onChange}
         value={value}
+        data-index={dataIndex}
         id={id}
       >
         {optgroupOptions.map((group) => (

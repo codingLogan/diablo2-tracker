@@ -20,7 +20,6 @@ function AddNewLevelPage({ match, history }) {
 
   const { classes, loading: loadingClasses } = useClasses([])
   const [skills, setSkills] = useState([])
-  const [skill, setSkill] = useState('')
   const [attributes, setAttributes] = useState({
     strength: 0,
     dexterity: 0,
@@ -28,13 +27,16 @@ function AddNewLevelPage({ match, history }) {
     energy: 0,
   })
 
+  // Selectable skill fields
+  const [selectedSkills, setSelectedSkills] = useState([{ name: '' }])
+
   useEffect(() => {
     if (classes && build && buildId === build._id) {
       const buildsClass = classes.find(
         (charClass) => charClass._id === build.classId._id
       )
       setSkills(buildsClass.skillTrees)
-      setSkill(buildsClass.skillTrees[0].skills[0].name)
+      setSelectedSkills([buildsClass.skillTrees[0].skills[0]])
     }
   }, [classes, build, buildId])
 
@@ -50,7 +52,7 @@ function AddNewLevelPage({ match, history }) {
     e.preventDefault()
     dispatch(
       newBuildLevelAction(build._id, {
-        skills: [{ name: skill }],
+        skills: selectedSkills,
         attributes,
       })
     )
@@ -70,8 +72,8 @@ function AddNewLevelPage({ match, history }) {
             buildId={buildId}
             onSubmit={onSubmit}
             skills={skills}
-            skill={skill}
-            setSkill={setSkill}
+            selectedSkills={selectedSkills}
+            setSelectedSkills={setSelectedSkills}
             attributes={attributes}
             setAttributes={setAttributes}
           />

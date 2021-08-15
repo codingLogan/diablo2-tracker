@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import SkillSelect from '../formHelpers/SkillSelect'
@@ -14,16 +14,22 @@ function LevelForm({
   buildId,
   onSubmit = () => {},
   skills = [], // What skills should be selectable by this charcter
-  skill = '', // The current skill selection
-  setSkill,
+  selectedSkills = [{}],
+  setSelectedSkills,
   attributes = defaultAttributes,
   setAttributes,
 }) {
   return (
     <Form className='mt-4' onSubmit={onSubmit}>
       <SkillSelect
-        onChange={(e) => setSkill(e.target.value)}
-        value={skill}
+        onChange={(e) => {
+          // Replace the index with the correct index
+          const dataIndex = e.target.getAttribute('data-index')
+          const newSkills = [...selectedSkills]
+          newSkills[dataIndex] = { name: e.target.value }
+          setSelectedSkills(newSkills)
+        }}
+        values={selectedSkills}
         skillTrees={skills}
       />
 

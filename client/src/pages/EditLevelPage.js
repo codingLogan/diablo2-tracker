@@ -22,7 +22,7 @@ function EditLevelPage({ match, history }) {
 
   // Form fields
   const [skills, setSkills] = useState([])
-  const [skill, setSkill] = useState('')
+  const [selectedSkills, setSelectedSkills] = useState([{ name: '' }])
   const [attributes, setAttributes] = useState(defaultAttributes)
 
   // Preload the form fields from the current level
@@ -33,12 +33,11 @@ function EditLevelPage({ match, history }) {
       )
 
       if (buildLevel && buildLevel?.improvements?.skills?.length) {
-        // TODO make this an array, or object with selection and a number
-        setSkill(buildLevel?.improvements?.skills[0].name)
+        setSelectedSkills(buildLevel?.improvements?.skills)
         setAttributes(buildLevel?.improvements?.attributes ?? defaultAttributes)
       }
     }
-  }, [build, setSkill, setAttributes, editLevelNumber])
+  }, [build, setAttributes, editLevelNumber])
 
   // Get the available skills for the character class
   // Prerequisite: the build's class selection
@@ -63,7 +62,7 @@ function EditLevelPage({ match, history }) {
     e.preventDefault()
     dispatch(
       editBuildLevelAction(build._id, editLevelNumber, {
-        skills: [{ name: skill }],
+        skills: selectedSkills,
         attributes,
       })
     )
@@ -77,8 +76,8 @@ function EditLevelPage({ match, history }) {
             buildId={buildId}
             onSubmit={onSubmit}
             skills={skills}
-            skill={skill}
-            setSkill={setSkill}
+            selectedSkills={selectedSkills}
+            setSelectedSkills={setSelectedSkills}
             attributes={attributes}
             setAttributes={setAttributes}
           />

@@ -10,7 +10,7 @@ function SkillSelect({
   id = 'skillselect',
   label = 'Select a skill',
   onChange,
-  value,
+  values,
   skillTrees = [],
 }) {
   const optGroupOptions = skillTrees.map((tree) => {
@@ -27,15 +27,18 @@ function SkillSelect({
       options: mappedSkills,
     }
   })
-  return (
+
+  return values.map((selectedSkill, index) => (
     <OptGroupSelect
+      key={index}
       id={id}
+      dataIndex={index}
       label={label}
       onChange={onChange}
-      value={value}
+      value={selectedSkill.name}
       optgroupOptions={optGroupOptions}
     />
-  )
+  ))
 }
 
 export default SkillSelect
