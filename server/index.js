@@ -11,6 +11,7 @@ import { notFound, internalError } from './middleware/errorMiddleWare.js'
 
 dotenv.config()
 connectDB()
+const __dirname = path.resolve()
 
 const app = express()
 
