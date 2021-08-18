@@ -33,6 +33,8 @@ userSchema.methods.matchPassword = async function (password) {
 }
 
 // mongoose middleware
+// Note - pre-save doesn't run when insertMany is called
+// You must call create instead, which calls save underneath
 userSchema.pre('save', async function (next) {
   // Only run when password changes
   if (!this.isModified('password')) {

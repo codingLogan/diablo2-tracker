@@ -31,4 +31,43 @@ const authenticateUser = async (req, res, next) => {
   }
 }
 
-export { authenticateUser }
+const registerUser = async (req, res, next) => {
+  const { name, email, password } = req.body
+
+  try {
+    // Make sure user email doesn't already exist
+    const foundUser = await User.findOne({ email: email })
+
+    if (foundUser) {
+      res.status(400)
+      throw new Error('Email address already in use')
+    }
+
+    // Accept user information
+    const newUser = {
+      name,
+      email,
+      // We don't have to hash this password, because we told Mongo
+      // to hash the password pre "save": see userModel.js
+      password,
+    }
+
+    // Save the information into the database via Mongoose
+    const savedUser = await User.create(newUser)
+
+    if (savedUser) {
+      res.json({
+        _id: savedUser._id,
+        name: savedUser.name,
+        email: savedUser.email,
+      })
+    } else {
+      res.status(400)
+      throw new Error('User could not be saved')
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
+export { authenticateUser, registerUser }
