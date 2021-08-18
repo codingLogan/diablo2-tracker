@@ -60,6 +60,7 @@ const registerUser = async (req, res, next) => {
         _id: savedUser._id,
         name: savedUser.name,
         email: savedUser.email,
+        token: generateToken(savedUser._id),
       })
     } else {
       res.status(400)

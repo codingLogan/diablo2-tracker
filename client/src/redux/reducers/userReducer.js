@@ -4,6 +4,9 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
   USER_LOGOUT,
+  REGISTER_USER,
+  REGISTER_USER_SUCCESS,
+  REGISTER_USER_FAILURE,
 } from '../constants/userConstants'
 import { catchError, map, mergeMap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
@@ -42,6 +45,52 @@ export function userLoginEpic(action$) {
           catchError((error) =>
             of({
               type: USER_LOGIN_FAILURE,
+              payload: error.xhr.response,
+              error: true,
+            })
+          )
+        )
+    )
+  )
+}
+
+export function userRegisterReducer(state = {}, action) {
+  switch (action.type) {
+    case REGISTER_USER:
+      return { loading: true }
+    case REGISTER_USER_SUCCESS:
+      return { loading: false }
+    case REGISTER_USER_FAILURE:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export function userRegisterEpic(action$) {
+  return action$.pipe(
+    ofType(REGISTER_USER),
+    mergeMap((action) =>
+      ajax
+        .post('/users', action.payload, {
+          'Content-Type': 'application/json',
+        })
+        .pipe(
+          mergeMap((result) =>
+            of(
+              {
+                type: REGISTER_USER_SUCCESS,
+                payload: result.response,
+              },
+              {
+                type: USER_LOGIN_SUCCESS,
+                payload: result.response,
+              }
+            )
+          ),
+          catchError((error) =>
+            of({
+              type: REGISTER_USER_FAILURE,
               payload: error.xhr.response,
               error: true,
             })

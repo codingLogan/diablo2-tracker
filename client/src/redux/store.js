@@ -1,7 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { combineEpics, createEpicMiddleware } from 'redux-observable'
-import { userLoginEpic, userLoginReducer } from './reducers/userReducer'
+import {
+  userLoginEpic,
+  userLoginReducer,
+  userRegisterEpic,
+  userRegisterReducer,
+} from './reducers/userReducer'
 import {
   editBuildLevelEpic,
   editBuildLevelReducer,
@@ -30,7 +35,8 @@ const rootEpic = combineEpics(
   postBuildEpic,
   newBuildLevelEpic,
   editBuildLevelEpic,
-  editBuildEpic
+  editBuildEpic,
+  userRegisterEpic
 )
 
 const rootReducer = combineReducers({
@@ -43,6 +49,7 @@ const rootReducer = combineReducers({
   editBuildLevel: editBuildLevelReducer,
   editBuild: editBuildReducer,
   currentLevel: storeBuildLevelReducer,
+  registerUser: userRegisterReducer,
 })
 
 const localStorageLogin = localStorage.getItem('userLogin')

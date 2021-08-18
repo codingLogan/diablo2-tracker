@@ -10,6 +10,7 @@ import MyBuildsPage from './pages/MyBuildsPage'
 import AddNewLevelPage from './pages/AddNewLevelPage'
 import EditLevelPage from './pages/EditLevelPage'
 import EditBuildPage from './pages/EditBuildPage'
+import RegisterPage from './pages/RegisterPage'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <main>
         <Container>
           <Route path='/' component={BuildListPage} exact />
+          <Route path='/register' component={RegisterPage} />
           <Route path='/login' component={LoginPage} />
           <Route path='/mine' exact component={MyBuildsPage} />
           <Route path='/build/create' exact component={CreateBuildPage} />

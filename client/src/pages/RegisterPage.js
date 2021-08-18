@@ -3,17 +3,18 @@ import ContainerPage from './ContainerPage'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { loginAction } from '../redux/actions/userActions'
+import { registerAction } from '../redux/actions/userActions'
 import FormContainer from '../components/FormContainer'
 import useLoggedInUser from '../hooks/useLoggedInUser'
 
-function LoginPage({ history }) {
+function RegisterPage({ history }) {
   const dispatch = useDispatch()
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  // Push the user back to the home page if already logged in
   const user = useLoggedInUser()
-
   useEffect(() => {
     if (user && user.token) {
       history.push('/')
@@ -22,7 +23,7 @@ function LoginPage({ history }) {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    dispatch(loginAction(email, password))
+    dispatch(registerAction(name, email, password))
   }
 
   return (
@@ -34,9 +35,18 @@ function LoginPage({ history }) {
           flexDirection: 'column',
           justifyContent: 'center',
         }}
-        title='Please Log In'
+        title='Create an Account'
       >
         <Form onSubmit={onSubmit}>
+          <Form.Group controlId='name'>
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Enter your name'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Form.Group>
           <Form.Group controlId='email'>
             <Form.Label>Email Address</Form.Label>
             <Form.Control
@@ -58,7 +68,7 @@ function LoginPage({ history }) {
           </Form.Group>
 
           <Button type='submit' className='my-3'>
-            Log In
+            Register
           </Button>
           <Link className='mx-2' to='/register'>
             Create Account
@@ -69,4 +79,4 @@ function LoginPage({ history }) {
   )
 }
 
-export default LoginPage
+export default RegisterPage
