@@ -22,10 +22,15 @@ async function clearData() {
   await User.deleteMany()
 }
 
-async function insertData() {
+async function insertData(clean = true) {
   // Data that doesn't depend on anything else (production)
   await Attributes.insertMany(getAttributes())
   const createdClasses = await CharacterClass.insertMany(getCharacterClasses())
+
+  // If clean is specified, don't insert any example data
+  if (clean) {
+    return
+  }
 
   // Data that is for testing / development
   const users = await getDefaultUsers()
@@ -72,10 +77,21 @@ async function insertData() {
   }
 }
 
+/**
+ * Seeder accepts an argument
+ * npm run seed: inserts only minimal data (production)
+ * npm run seed dev: insert a few example builds and users
+ */
 async function start() {
+  let clean = true
+
+  if (process.argv.length > 2 && process.argv[2] === 'dev') {
+    clean = false
+  }
+
   try {
     await clearData()
-    await insertData()
+    await insertData(clean)
 
     console.log('Data seed success')
     process.exit()
