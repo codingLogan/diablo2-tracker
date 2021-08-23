@@ -11,7 +11,7 @@ const useBuildSummary = (buildId) => {
   useEffect(() => {
     if (!buildSummary && !loading && !error) {
       setLoading(true)
-      fetch(`/builds/${buildId}/summary`)
+      fetch(`/api/builds/${buildId}/summary`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Build summary request failed')

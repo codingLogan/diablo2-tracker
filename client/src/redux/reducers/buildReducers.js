@@ -49,7 +49,7 @@ export function fetchBuildsEpic(action$) {
   return action$.pipe(
     ofType(FETCH_BUILDS),
     mergeMap((action) =>
-      ajax.getJSON('/builds').pipe(
+      ajax.getJSON('/api/builds').pipe(
         map((result) => ({
           type: FETCH_BUILDS_SUCCESS,
           payload: result,
@@ -83,7 +83,7 @@ export function fetchBuildDetailsEpic(action$) {
   return action$.pipe(
     ofType(FETCH_BUILD_DETAILS),
     mergeMap((action) =>
-      ajax.getJSON(`/builds/${action.buildId}`).pipe(
+      ajax.getJSON(`/api/builds/${action.buildId}`).pipe(
         map((result) => ({
           type: FETCH_BUILD_DETAILS_SUCCESS,
           payload: result,
@@ -120,7 +120,7 @@ export function postBuildEpic(action$, state$) {
     ofType(POST_BUILD),
     mergeMap((action) =>
       ajax
-        .post(`/builds`, action.payload, {
+        .post(`/api/builds`, action.payload, {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${action.token}`,
         })
@@ -161,7 +161,7 @@ export function editBuildEpic(action$, state$) {
     ofType(EDIT_BUILD),
     mergeMap((action) =>
       ajax
-        .put(`/builds/${action.buildId}`, action.payload, {
+        .put(`/api/builds/${action.buildId}`, action.payload, {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${action.token}`,
         })
@@ -203,7 +203,7 @@ export function newBuildLevelEpic(action$, state$) {
     mergeMap((action) =>
       ajax
         .post(
-          `/builds/${action.payload.buildId}/level`,
+          `/api/builds/${action.payload.buildId}/level`,
           { improvements: action.payload.improvements },
           {
             'Content-Type': 'application/json',
@@ -248,7 +248,7 @@ export function editBuildLevelEpic(action$, state$) {
     mergeMap((action) =>
       ajax
         .put(
-          `/builds/${action.payload.buildId}/level/${action.payload.levelNumber}`,
+          `/api/builds/${action.payload.buildId}/level/${action.payload.levelNumber}`,
           { improvements: action.payload.improvements },
           {
             'Content-Type': 'application/json',
@@ -314,7 +314,7 @@ export function deleteBuildEpic(action$, state$) {
     ofType(DELETE_BUILD),
     mergeMap((action) =>
       ajax
-        .delete(`/builds/${action.payload.buildId}`, {
+        .delete(`/api/builds/${action.payload.buildId}`, {
           Authorization: `Bearer ${state$.value.userLogin.user.token}`,
         })
         .pipe(

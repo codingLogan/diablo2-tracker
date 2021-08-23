@@ -24,9 +24,9 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json())
 
 // Add route collections here
-app.use('/users', userRoutes)
-app.use('/builds', buildRoutes)
-app.use('/diablo', diabloRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/builds', buildRoutes)
+app.use('/api/diablo', diabloRoutes)
 
 // Provide the static file location
 if (process.env.NODE_ENV === 'production') {

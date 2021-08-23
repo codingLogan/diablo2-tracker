@@ -25,7 +25,7 @@ export function fetchClassesEpic(action$) {
   return action$.pipe(
     ofType(FETCH_CLASSES),
     mergeMap((action) =>
-      ajax.get('/diablo/classes').pipe(
+      ajax.get('/api/diablo/classes').pipe(
         map((result) => ({
           type: FETCH_CLASSES_SUCCESS,
           payload: result.response,

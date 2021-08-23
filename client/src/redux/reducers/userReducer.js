@@ -34,7 +34,7 @@ export function userLoginEpic(action$) {
     ofType(USER_LOGIN),
     mergeMap((action) =>
       ajax
-        .post('/users/login', action.payload, {
+        .post('/api/users/login', action.payload, {
           'Content-Type': 'application/json',
         })
         .pipe(
@@ -72,7 +72,7 @@ export function userRegisterEpic(action$) {
     ofType(REGISTER_USER),
     mergeMap((action) =>
       ajax
-        .post('/users', action.payload, {
+        .post('/api/users', action.payload, {
           'Content-Type': 'application/json',
         })
         .pipe(
