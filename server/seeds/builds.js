@@ -1,9 +1,15 @@
 // Creates a build for the classes specified
-function getBuilds(userId, classIds) {
-  return classIds.map((classId) => ({
+/**
+ *
+ * @param {string} userId
+ * @param {Array<{classId, name}>} classes
+ * @returns
+ */
+function getBuilds(userId, classes) {
+  return classes.map(({ classId, name }) => ({
     userRef: userId,
     classId,
-    name: 'Example Build',
+    name,
     summary: 'Example Summary',
   }))
 }

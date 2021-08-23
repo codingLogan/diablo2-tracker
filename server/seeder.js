@@ -32,39 +32,44 @@ async function insertData() {
   const createdUsers = await User.insertMany(users)
 
   // Builds depend on a User that created it, and a valid character class
+  // Create one build per class
   const testBuilds = getBuilds(
     createdUsers[0]._id,
-    createdClasses.map((charClass) => charClass._id)
+    createdClasses.map((charClass) => ({
+      classId: charClass._id,
+      name: charClass.name,
+    }))
   )
   const createdBuilds = await Build.insertMany(testBuilds)
 
-  // Build Details (depends on the build)
-  const createdDetails = await BuildDetails.create({
-    buildId: createdBuilds[0]._id,
-    levels: [
-      {
-        level: 1,
-      },
-      {
-        level: 2,
-        improvements: {
-          skills: [{ name: 'Teeth' }],
-          attributes: {
-            strength: 0,
-            dexterity: 0,
-            vitality: 5,
-            energy: 0,
+  // Create some build details for each build we just created
+  // (this duplicates behavior in our API controller)
+  let i = 0
+  for (i = 0; i < createdBuilds.length; i++) {
+    const build = createdBuilds[i]
+    // Create the details (class specific)
+    const details = await BuildDetails.create({
+      buildId: build._id,
+      levels: [
+        {
+          level: 1,
+          improvements: {
+            skills: [],
+            attributes: {
+              strength: 0,
+              dexterity: 0,
+              vitality: 0,
+              energy: 0,
+            },
           },
         },
-      },
-    ],
-  })
+      ],
+    })
 
-  // The only example data we are building by defautl is a necromancer
-  const necro = await CharacterClass.find({ name: 'Necromancer' })
-  const necroBuild = createdBuilds.find((build) => build.classid === necro._id)
-  necroBuild.buildDetails = createdDetails._id
-  await necroBuild.save()
+    // Connect the buildDetails to the build
+    build.buildDetails = details._id
+    await build.save()
+  }
 }
 
 async function start() {
