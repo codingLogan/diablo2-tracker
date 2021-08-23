@@ -23,6 +23,10 @@ import {
   EDIT_BUILD_FAILURE,
   EDIT_BUILD_CLEAR,
   STORE_CURRENT_LEVEL,
+  DELETE_BUILD,
+  DELETE_SUCCESS,
+  DELETE_FAILURE,
+  DELETE_CLEAR,
 } from '../constants/buildConstants'
 import { catchError, map, mergeMap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
@@ -281,4 +285,50 @@ export function storeBuildLevelReducer(
     default:
       return state
   }
+}
+
+// To check if a build was deleted...
+// buildId is !null
+// loading is false
+// error is null
+export function deleteBuildReducer(
+  state = { buildId: null, loading: false, error: null },
+  action
+) {
+  switch (action.type) {
+    case DELETE_BUILD:
+      return { ...state, buildId: action.payload.buildId, loading: true }
+    case DELETE_SUCCESS:
+      return { ...state, loading: false }
+    case DELETE_FAILURE:
+      return { ...state, loading: false, error: action.payload }
+    case DELETE_CLEAR:
+      return { buildId: null, loading: false, error: null }
+    default:
+      return state
+  }
+}
+
+export function deleteBuildEpic(action$, state$) {
+  return action$.pipe(
+    ofType(DELETE_BUILD),
+    mergeMap((action) =>
+      ajax
+        .delete(`/builds/${action.payload.buildId}`, {
+          Authorization: `Bearer ${state$.value.userLogin.user.token}`,
+        })
+        .pipe(
+          map((result) => ({
+            type: DELETE_SUCCESS,
+          })),
+          catchError((error) =>
+            of({
+              type: DELETE_FAILURE,
+              payload: error.xhr.response,
+              error: true,
+            })
+          )
+        )
+    )
+  )
 }

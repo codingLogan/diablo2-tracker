@@ -1,4 +1,5 @@
 import {
+  DELETE_BUILD,
   EDIT_BUILD,
   EDIT_BUILD_LEVEL,
   FETCH_BUILDS,
@@ -65,6 +66,15 @@ export function storeBuildLevelAction(buildId, currentLevel) {
     payload: {
       buildId,
       currentLevel,
+    },
+  }
+}
+
+export function deleteBuild(buildId) {
+  return {
+    type: DELETE_BUILD,
+    payload: {
+      buildId,
     },
   }
 }

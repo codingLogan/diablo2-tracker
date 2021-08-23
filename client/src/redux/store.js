@@ -21,6 +21,8 @@ import {
   editBuildReducer,
   editBuildEpic,
   storeBuildLevelReducer,
+  deleteBuildEpic,
+  deleteBuildReducer,
 } from './reducers/buildReducers'
 import {
   fetchClassesEpic,
@@ -36,7 +38,8 @@ const rootEpic = combineEpics(
   newBuildLevelEpic,
   editBuildLevelEpic,
   editBuildEpic,
-  userRegisterEpic
+  userRegisterEpic,
+  deleteBuildEpic
 )
 
 const rootReducer = combineReducers({
@@ -50,6 +53,7 @@ const rootReducer = combineReducers({
   editBuild: editBuildReducer,
   currentLevel: storeBuildLevelReducer,
   registerUser: userRegisterReducer,
+  deleteBuild: deleteBuildReducer,
 })
 
 const localStorageLogin = localStorage.getItem('userLogin')

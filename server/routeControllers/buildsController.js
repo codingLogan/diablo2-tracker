@@ -103,6 +103,41 @@ async function updateBuildById(req, res, next) {
   }
 }
 
+async function deleteBuild(req, res, next) {
+  const buildId = req.params.id
+  try {
+    const build = await Build.findById(buildId).populate('buildDetails')
+
+    if (!build || !build.buildDetails._id) {
+      res.status(404)
+      throw new Error('Build not found')
+    }
+
+    let errorMessage = ''
+
+    // To remove a build, we need to remove all details first
+    const removedDetailsNum = await BuildDetails.deleteOne({ buildId: buildId })
+    if (removedDetailsNum <= 0) {
+      errorMessage += 'The system failed to remove details for the build. '
+    }
+
+    // Now remove the actual build
+    const removeBuildNum = await Build.deleteOne({ _id: buildId })
+    if (removeBuildNum <= 0) {
+      errorMessage +=
+        'The system failed to remove the build, but the details were removed. '
+    }
+
+    if (errorMessage) {
+      throw new Error(errorMessage)
+    }
+
+    res.json({ success: true })
+  } catch (error) {
+    next(error)
+  }
+}
+
 async function addNewLevel(req, res, next) {
   try {
     const buildId = req.params.id
@@ -206,6 +241,7 @@ export {
   createBuild,
   getBuilds,
   getBuildById,
+  deleteBuild,
   getBuildSummary,
   updateBuildById,
   addNewLevel,
